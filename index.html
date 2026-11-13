@@ -12,7 +12,7 @@
 <div class="filters"><input id="search" type="search" placeholder="氏名・地域・選挙区で検索" aria-label="氏名・地域・選挙区で検索"><select id="platform" aria-label="SNSを選ぶ"><option value="">すべてのSNS</option><option>X</option><option>Instagram</option><option>YouTube</option><option>Facebook</option><option>Threads</option><option>TikTok</option><option>note/Blog</option></select><select id="period" aria-label="期間を選ぶ"><option value="all">全期間</option><option value="1">24時間</option><option value="7">7日間</option><option value="30">30日間</option></select></div>
 <div class="hint" id="notice">公開動画は自動取得。その他の媒体は登録された投稿のみ表示します。</div></section>
 <section><div class="sectionhead"><h2 id="heading">最新投稿</h2><span class="small" id="count"></span></div><div id="cards" class="grid"><div class="empty">読み込み中です…</div></div></section>
-<div class="notice" id="status">YouTubeの新着確認は約2時間ごとに実行する設定です（実行時刻・成功は保証されません）。X・Instagramなどは自動取得していません。SNS内での操作には各SNSのログインが必要な場合があります。</div>
+<div class="notice" id="status">YouTubeと取得可能なInstagramの投稿を約2時間ごとに自動取得する設定です（実行時刻・成功は保証されません）。Xは公開リストを別画面で一括閲覧できます。SNS内での操作には各SNSのログインが必要な場合があります。</div>
 <footer class="footer">福岡県連 SNSポータル ｜ リンク先は各SNSの外部サイトです。掲載・所属・役職等の最新情報は各公式発表をご確認ください。</footer>
 </main>
 <script>
@@ -25,45 +25,28 @@ function personCard(p){const c=el("article",undefined,"card");const h=el("div");
 function postCard(p){const c=el("article",undefined,"card");const meta=el("div");meta.append(el("div",p.name||"投稿者","name"),el("div",(p.media||"SNS")+" ・ "+(p.date?new Date(p.date).toLocaleString("ja-JP"):"投稿日時未登録"),"small"));c.append(meta);if(p.district)c.append(el("div",p.district,"district"));if(p.title)c.append(el("div",p.title,"posttitle"));if(p.text)c.append(el("div",p.text,"excerpt"));if(safe(p.image)){const im=document.createElement("img");im.src=p.image;im.loading="lazy";im.alt="投稿のサムネイル";im.className="preview";im.onerror=()=>im.remove();c.append(im)}
 const actions=el("div",undefined,"actions");const a=link("投稿を見る・いいね・コメント・シェア",p.url);if(a)actions.append(a);c.append(actions);return c}
 function renderX(){
-  $("heading").textContent="Xタイムライン";
-  $("count").textContent="登録アカウントをまとめて見る";
+  $("heading").textContent="Xの最新投稿";
   $("period").disabled=true;
   $("platform").disabled=true;
   $("search").disabled=true;
   const cards=$("cards");cards.replaceChildren();cards.style.display="block";
-  const intro=el("div",undefined,"notice");
-  intro.style.margin="0 0 15px";
-  intro.textContent="Xの公開リストをまとめて表示します。X側の仕様やログイン状態によって表示できない場合があります。投稿への反応は元のXから行えます。";
-  cards.append(intro);
+  const registered=people.filter(p=>!excluded.includes(p.name)&&safe(p.links?.X));
+  $("count").textContent=registered.length+"アカウント";
   const url=safe(xConfig.listUrl);
+  const intro=el("div",undefined,"card");
+  intro.style.maxWidth="760px";intro.style.margin="0 auto";
+  intro.style.minHeight="0";intro.style.gap="14px";
+  intro.append(el("div","Xの投稿は、公開リストでまとめてチェック","posttitle"));
+  intro.append(el("div","Xの埋め込みがこのサイトでは表示されないため、公開リストを直接開く方式にしています。一人ずつアカウントを巡回する必要はありません。","district"));
   if(url&&["x.com","twitter.com"].includes(new URL(url).hostname)&&/\/lists\/\d+/.test(url)){
-    const container=el("div",undefined,"card");
-    container.style.maxWidth="760px";
-    container.style.margin="0 auto";
-    const timeline=el("a","Xリストのポストを見る","twitter-timeline");
-    timeline.href="https://twitter.com/i/lists/"+url.match(/\/lists\/(\d+)/)[1];timeline.setAttribute("data-height","650");timeline.setAttribute("data-theme","light");timeline.setAttribute("data-dnt","true");
-    container.append(timeline);
-    const open=link("Xリストを直接開く",url);
-    if(open){const acts=el("div",undefined,"actions");acts.append(open);container.append(acts)}
-    cards.append(container);
-    const embedNote=el("div","X側が埋め込み表示を制限している場合は、下の「Xリストを直接開く」から最新投稿を見られます。","small");
-    container.append(embedNote);
-    if(window.twttr?.widgets?.load){window.twttr.widgets.load(container)}
-    else if(!document.getElementById("x-widget-script")){
-      const script=document.createElement("script");script.id="x-widget-script";
-      script.src="https://platform.twitter.com/widgets.js";script.async=true;
-      script.onload=()=>{if(window.twttr?.widgets?.load && view==="x")window.twttr.widgets.load(container)};
-      script.onerror=()=>{embedNote.textContent="Xの埋め込みスクリプトを読み込めませんでした。Xリストを直接開いてください。"};
-      document.body.append(script)
-    }
-  }else{
-    cards.append(el("div","Xの公開リストURLを設定すると、ここに21アカウントのタイムラインを表示できます。下のアカウント一覧からXリストを作成してください。","empty"));
-  }
-  const queryX=people.filter(p=>!excluded.includes(p.name)&&safe(p.links?.X));
-  const wrap=el("div");wrap.style.marginTop="20px";
-  wrap.append(el("h3","登録済みXアカウント（"+queryX.length+"人）"));
+    const btn=link("21人のXタイムラインを開く",url);
+    if(btn){btn.style.display="inline-block";btn.style.padding="13px 20px";btn.style.background="#174489";btn.style.color="#fff";btn.style.borderRadius="10px";btn.style.fontWeight="800";btn.style.textDecoration="none";btn.style.alignSelf="flex-start";intro.append(btn)}
+  }else{intro.append(el("div","公開Xリストはまだ設定されていません。","district"))}
+  cards.append(intro);
+  const wrap=el("div");wrap.style.marginTop="22px";
+  wrap.append(el("h3","個別のXアカウント（"+registered.length+"人）"));
   const links=el("div",undefined,"actions");
-  queryX.forEach(p=>{const a=link(p.name,p.links.X);if(a)links.append(a)});
+  registered.forEach(p=>{const a=link(p.name,p.links.X);if(a)links.append(a)});
   wrap.append(links);cards.append(wrap);
 }
 function render(){const query=$("search").value.toLocaleLowerCase("ja").trim(),platform=$("platform").value,days=$("period").value;
