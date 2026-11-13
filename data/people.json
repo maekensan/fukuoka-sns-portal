@@ -1,0 +1,471 @@
+[
+  {
+    "id": 1,
+    "name": "内田 裕紹",
+    "category": "候補予定者",
+    "district": "福岡県議選（北九州市戸畑区）",
+    "status": "推薦・新人",
+    "links": {
+      "Instagram": "https://www.instagram.com/yushaoneitian/"
+    },
+    "order": 1,
+    "photo": ""
+  },
+  {
+    "id": 2,
+    "name": "光野 あや",
+    "category": "候補予定者",
+    "district": "福岡県議選（小郡市・三井郡）",
+    "status": "公認・新人",
+    "links": {
+      "X": "https://x.com/aya_amcc",
+      "Instagram": "https://www.instagram.com/aya_amcc/",
+      "note/Blog": "https://note.com/aya_amcc"
+    },
+    "order": 2,
+    "photo": ""
+  },
+  {
+    "id": 3,
+    "name": "吹田 将臣",
+    "category": "候補予定者",
+    "district": "水巻町議選",
+    "status": "公認・新人",
+    "links": {
+      "Instagram": "https://www.instagram.com/fu8425/"
+    },
+    "order": 3,
+    "photo": ""
+  },
+  {
+    "id": 4,
+    "name": "牧嶋 啓",
+    "category": "候補予定者",
+    "district": "福岡市議選（中央区）",
+    "status": "公認・新人",
+    "links": {
+      "LINE": "https://lin.ee/7hGj5Jd",
+      "X": "https://x.com/MakishimaKei",
+      "Threads": "https://www.threads.com/@makishimakei7",
+      "Instagram": "https://www.instagram.com/makishimakei7/"
+    },
+    "order": 4,
+    "photo": ""
+  },
+  {
+    "id": 5,
+    "name": "近藤 里美",
+    "category": "候補予定者",
+    "district": "福岡市議選（南区）",
+    "status": "公認・現職",
+    "links": {
+      "Instagram": "https://www.instagram.com/satomi.kondo/"
+    },
+    "order": 5,
+    "photo": ""
+  },
+  {
+    "id": 6,
+    "name": "新納 亮平",
+    "category": "候補予定者",
+    "district": "福岡市議選（早良区）",
+    "status": "公認・新人",
+    "links": {
+      "LINE": "https://lin.ee/96Y91qG",
+      "X": "https://x.com/ShinnoRyohei",
+      "Instagram": "https://www.instagram.com/jajamaru_123/",
+      "YouTube": "https://www.youtube.com/channel/UCOUEwSg7OFa4hZj0C700NOA"
+    },
+    "order": 6,
+    "photo": ""
+  },
+  {
+    "id": 7,
+    "name": "濱島 元気",
+    "category": "候補予定者",
+    "district": "直方市議選",
+    "status": "公認・新人",
+    "links": {
+      "Instagram": "https://www.instagram.com/genki_nogata/"
+    },
+    "order": 7,
+    "photo": ""
+  },
+  {
+    "id": 8,
+    "name": "野口 健太郎",
+    "category": "候補予定者",
+    "district": "福津市議選",
+    "status": "推薦・新人",
+    "links": {
+      "X": "https://x.com/noguchiR35",
+      "Instagram": "https://www.instagram.com/kentaronoguchi/"
+    },
+    "order": 8,
+    "photo": ""
+  },
+  {
+    "id": 9,
+    "name": "平川 孝子",
+    "category": "候補予定者",
+    "district": "福津市議選",
+    "status": "公認・新人",
+    "links": {
+      "X": "https://x.com/TamiNPNL",
+      "Instagram": "https://www.instagram.com/fukutsunotami/"
+    },
+    "order": 9,
+    "photo": ""
+  },
+  {
+    "id": 10,
+    "name": "清田 耕平",
+    "category": "候補予定者",
+    "district": "田川市議選",
+    "status": "公認・新人",
+    "links": {
+      "Instagram": "https://www.instagram.com/kouhei.k_0928/"
+    },
+    "order": 10,
+    "photo": ""
+  },
+  {
+    "id": 11,
+    "name": "山下 陽平",
+    "category": "候補予定者",
+    "district": "須恵町議選",
+    "status": "公認・新人",
+    "links": {
+      "LINE": "https://line.me/R/ti/p/@113rcmil",
+      "X": "https://x.com/nekoya_purple",
+      "Facebook": "https://www.facebook.com/y.yamashita.purple",
+      "Threads": "https://www.threads.com/@nekoya_purple",
+      "Instagram": "https://www.instagram.com/nekoya_purple/",
+      "YouTube": "https://www.youtube.com/channel/UCHERlYS7MnRaSRR5KlSiRbw",
+      "TikTok": "https://www.tiktok.com/@nekoya_purple",
+      "note/Blog": "https://note.com/nekoya_purple"
+    },
+    "order": 11,
+    "photo": ""
+  },
+  {
+    "id": 12,
+    "name": "髙橋 伊織",
+    "category": "候補予定者",
+    "district": "福岡市議選（西区）",
+    "status": "公認・新人",
+    "links": {
+      "Facebook": "https://www.facebook.com/share/18ehc1mpyh/?mibextid=wwXIfr",
+      "Instagram": "https://www.instagram.com/iori_takahashi_fukuoka/"
+    },
+    "order": 12,
+    "photo": ""
+  },
+  {
+    "id": 13,
+    "name": "酒井 久之",
+    "category": "候補予定者",
+    "district": "福岡市議選（博多区）",
+    "status": "公認・新人",
+    "links": {
+      "LINE": "https://lin.ee/uG4RSPl",
+      "X": "https://x.com/Hisayuki_SAKAI",
+      "Facebook": "https://www.facebook.com/share/14v6DWg3z5u/?mibextid=wwXIfr",
+      "Threads": "https://www.threads.com/@hisayuki_sakai",
+      "Instagram": "https://www.instagram.com/hisayuki_sakai/",
+      "YouTube": "https://youtube.com/channel/UCW-7DR--mDe9laMjasGViGw"
+    },
+    "order": 13,
+    "photo": ""
+  },
+  {
+    "id": 14,
+    "name": "河野 禎史",
+    "category": "候補予定者",
+    "district": "福岡市議選（城南区）",
+    "status": "公認・新人",
+    "links": {
+      "公式HP": "https://saipon.jp/h/kawano.sadafumi",
+      "LINE": "https://line.me/ti/p/KnaccexjDm",
+      "Facebook": "https://www.facebook.com/hasiresada/",
+      "Instagram": "https://www.instagram.com/sadafumi.kawano/"
+    },
+    "order": 14,
+    "photo": ""
+  },
+  {
+    "id": 15,
+    "name": "岡崎 敦",
+    "category": "候補予定者",
+    "district": "福岡県議選（行橋市）",
+    "status": "公認・新人",
+    "links": {
+      "X": "https://x.com/_okazakiatsushi",
+      "Instagram": "https://www.instagram.com/okazaki.atsushi.1984/"
+    },
+    "order": 15,
+    "photo": ""
+  },
+  {
+    "id": 16,
+    "name": "大内田 佳介",
+    "category": "候補予定者",
+    "district": "福岡県議選（北九州市小倉北区）",
+    "status": "公認・新人",
+    "links": {
+      "Facebook": "https://www.facebook.com/keisuke.ohuchida/",
+      "Instagram": "https://www.instagram.com/keisuke_ohuchida/",
+      "TikTok": "https://www.tiktok.com/@user8429168004913"
+    },
+    "order": 16,
+    "photo": ""
+  },
+  {
+    "id": 17,
+    "name": "津曲 雄也",
+    "category": "候補予定者",
+    "district": "春日市議選",
+    "status": "公認・新人",
+    "links": {
+      "公式HP": "https://www.yuya-tsumagari.com/",
+      "LINE": "https://line.me/R/ti/p/@342ohgzy",
+      "X": "https://x.com/tsuma241",
+      "Facebook": "https://www.facebook.com/kurukuru.tmgr",
+      "Threads": "https://www.threads.com/@yuya.tsumagari",
+      "Instagram": "https://www.instagram.com/yuya.tsumagari/",
+      "YouTube": "https://www.youtube.com/channel/UCF1LX57bneitOaGspWZLiKQ/",
+      "note/Blog": "https://note.com/yuya_tsumagari"
+    },
+    "order": 17,
+    "photo": ""
+  },
+  {
+    "id": 18,
+    "name": "竹岡 靖二",
+    "category": "候補予定者",
+    "district": "福岡県議選（宗像市）",
+    "status": "公認・新人",
+    "links": {
+      "X": "https://x.com/seitama10",
+      "Instagram": "https://www.instagram.com/seiji_takeoka?stkn=MTgwMDlnMmYzbjA4cQ=="
+    },
+    "order": 18,
+    "photo": ""
+  },
+  {
+    "id": 19,
+    "name": "大塚 弘尊",
+    "category": "候補予定者",
+    "district": "福岡県議選（福岡市東区）",
+    "status": "公認・新人",
+    "links": {
+      "公式HP": "https://otsuka-hirotaka.jp/",
+      "LINE": "https://line.me/R/ti/p/@244kkqqb",
+      "X": "https://x.com/kokumin_otsuka",
+      "Facebook": "https://www.facebook.com/profile.php?id=61586900730264",
+      "Threads": "https://www.threads.com/@kokumin_otsuka?igshid=NTc4MTIwNjQ2YQ==",
+      "Instagram": "https://www.instagram.com/kokumin_otsuka/",
+      "YouTube": "https://www.youtube.com/channel/UC6QWXkNW02AYjAIdg1iUinQ",
+      "TikTok": "https://www.tiktok.com/@hirotakaotsuka?_r=1&_t=ZS-99xcCX3DJTO"
+    },
+    "order": 19,
+    "photo": ""
+  },
+  {
+    "id": 20,
+    "name": "前野 真実子",
+    "category": "候補予定者・現職",
+    "district": "福岡県議選（早良区）／福岡市議",
+    "status": "公認・新人（県議）",
+    "links": {
+      "公式HP": "https://maemami.jp/",
+      "LINE": "https://line.me/R/ti/p/@175sljps",
+      "X": "https://x.com/maenomamiko",
+      "Threads": "https://www.threads.com/@maeno_mamiko",
+      "Instagram": "https://www.instagram.com/maeno_mamiko/"
+    },
+    "order": 20,
+    "photo": ""
+  },
+  {
+    "id": 21,
+    "name": "大田 京子",
+    "category": "候補予定者・現職",
+    "district": "福岡県議選（福岡市南区）／県議",
+    "status": "公認・現職",
+    "links": {
+      "公式HP": "https://ota-kyoko.jp",
+      "X": "https://x.com/kyoko_ohta",
+      "Facebook": "https://www.facebook.com/share/1EpBV5EphH/?mibextid=wwXIfr",
+      "Threads": "https://www.threads.com/@kyoko.oota0909",
+      "Instagram": "https://www.instagram.com/kyoko.oota0909/",
+      "YouTube": "https://youtube.com/@ota-kyoko?si=ZVWzmxU2yFyAJK6G"
+    },
+    "order": 21,
+    "photo": ""
+  },
+  {
+    "id": 22,
+    "name": "許斐 亮太郎",
+    "category": "現職議員",
+    "district": "衆議院議員・福岡4区（比例九州）",
+    "status": "",
+    "links": {
+      "公式HP": "https://konomi-ryotaro.com/",
+      "LINE": "https://lin.ee/t0SAC27",
+      "X": "https://x.com/KonomiRyotaro",
+      "Instagram": "https://www.instagram.com/konomiryotaro?stkn=eG9qdDI2Zjd0emJq",
+      "YouTube": "https://www.youtube.com/channel/UCygovtgiO0z4_5vROAXV5hw"
+    },
+    "order": 22,
+    "photo": ""
+  },
+  {
+    "id": 23,
+    "name": "近藤 雅彦",
+    "category": "現職議員",
+    "district": "衆議院議員・福岡6区（比例九州）",
+    "status": "",
+    "links": {
+      "公式HP": "https://kondo-masahiko.com/",
+      "X": "https://x.com/kondo_masahiko6",
+      "Facebook": "https://www.facebook.com/masahiko.kondo6/",
+      "Threads": "https://www.threads.com/@kondo_masahiko6",
+      "Instagram": "https://www.instagram.com/kondo_masahiko6/"
+    },
+    "order": 23,
+    "photo": ""
+  },
+  {
+    "id": 24,
+    "name": "泉 日出夫",
+    "category": "現職議員",
+    "district": "北九州市議（小倉南区）",
+    "status": "",
+    "links": {
+      "公式HP": "https://izumi-hideo.com/",
+      "X": "https://x.com/123izumihideo",
+      "Facebook": "https://www.facebook.com/izumi.hideo",
+      "Threads": "https://www.threads.com/@123hideo",
+      "Instagram": "https://www.instagram.com/123hideo/",
+      "YouTube": "https://www.youtube.com/channel/UC6_dVlZGpJlbvKEUznFVvbA"
+    },
+    "order": 24,
+    "photo": ""
+  },
+  {
+    "id": 25,
+    "name": "宇都宮 亮",
+    "category": "現職議員",
+    "district": "北九州市議（小倉北区）",
+    "status": "",
+    "links": {
+      "公式HP": "https://utsunomiya-ryo.com/",
+      "X": "https://x.com/ryo_utsunomiya_",
+      "Instagram": "https://www.instagram.com/ryo_utunomiya?stkn=NXFmNWIwYXg3Y2p4"
+    },
+    "order": 25,
+    "photo": ""
+  },
+  {
+    "id": 26,
+    "name": "大久保 無我",
+    "category": "現職議員",
+    "district": "北九州市議（八幡西区）",
+    "status": "",
+    "links": {
+      "公式HP": "https://www.mugamuga.net/",
+      "X": "https://x.com/muga_okubo",
+      "Instagram": "https://www.instagram.com/mugaokubo/"
+    },
+    "order": 26,
+    "photo": ""
+  },
+  {
+    "id": 27,
+    "name": "岡林 直人",
+    "category": "現職議員",
+    "district": "太宰府市議",
+    "status": "",
+    "links": {
+      "公式HP": "https://on.kokumin-fukuoka.jp/",
+      "X": "https://x.com/OkabayashiNaoto",
+      "Threads": "https://www.threads.com/@okabayashi.naoto.dazaifu",
+      "Instagram": "https://www.instagram.com/okabayashi.naoto.dazaifu/"
+    },
+    "order": 27,
+    "photo": ""
+  },
+  {
+    "id": 28,
+    "name": "高崎 裕人",
+    "category": "現職議員",
+    "district": "小郡市議",
+    "status": "",
+    "links": {
+      "公式HP": "https://ty.kokumin-fukuoka.jp/",
+      "LINE": "https://line.me/R/ti/p/@505qgazn",
+      "Threads": "https://www.threads.com/@yuto_takasaki6",
+      "Instagram": "https://www.instagram.com/yuto_takasaki6/"
+    },
+    "order": 28,
+    "photo": ""
+  },
+  {
+    "id": 29,
+    "name": "永濱 晋一郎",
+    "category": "現職議員",
+    "district": "糸島市議",
+    "status": "",
+    "links": {
+      "X": "https://x.com/nagahama_ito",
+      "Instagram": "https://www.instagram.com/nagahamash2016/"
+    },
+    "order": 29,
+    "photo": ""
+  },
+  {
+    "id": 30,
+    "name": "中村 恵輔",
+    "category": "現職議員",
+    "district": "福津市議",
+    "status": "",
+    "links": {
+      "LINE": "https://line.me/R/ti/p/@897vdlxo",
+      "Threads": "https://www.threads.com/@keisuke_nakamura0910",
+      "Instagram": "https://www.instagram.com/keisuke_nakamura0910?stkn=MTFwOTRnNHA3eGY2eA==",
+      "note/Blog": "https://note.com/famous_azalea297"
+    },
+    "order": 30,
+    "photo": ""
+  },
+  {
+    "id": 31,
+    "name": "藤瀬 康司",
+    "category": "現職議員",
+    "district": "志免町議",
+    "status": "",
+    "links": {
+      "公式HP": "https://fujiseyasushi.work/",
+      "LINE": "https://lin.ee/SIn46FN",
+      "Instagram": "https://www.instagram.com/yasushi.fujise?stkn=MTNueHlsenJtajB5ZA=="
+    },
+    "order": 31,
+    "photo": ""
+  },
+  {
+    "id": 32,
+    "name": "守谷 正人",
+    "category": "現職議員",
+    "district": "福岡県議（福岡市城南区）",
+    "status": "",
+    "links": {
+      "公式HP": "https://blog.goo.ne.jp/macmac0621_1965",
+      "X": "https://x.com/masatomoriya",
+      "Threads": "https://www.threads.com/@masato_moriya_0621",
+      "Instagram": "https://www.instagram.com/masato_moriya_0621/"
+    },
+    "order": 32,
+    "photo": ""
+  }
+]
