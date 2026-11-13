@@ -107,16 +107,19 @@ def collect(channel, person):
     # YouTube currently uses /xml/feeds/ for its working notification topic.
     # Keep the older /feeds/ route as a fallback for intermittent changes.
     failures = []
-    for prefix in ("https://www.youtube.com/xml/feeds/videos.xml?channel_id=",
-                   "https://www.youtube.com/feeds/videos.xml?channel_id="):
+    root = None
+    for prefix in ("https://www.youtube.com/feeds/videos.xml?channel_id=",
+                   "https://www.youtube.com/xml/feeds/videos.xml?channel_id="):
         try:
-            feed = download(prefix + channel)
-            root = ET.fromstring(feed)
-            break
+            candidate = ET.fromstring(download(prefix + channel))
+            if candidate.findall(ATOM + "entry"):
+                root = candidate
+                break
+            failures.append("feed returned zero entries")
         except (urllib.error.HTTPError, urllib.error.URLError, ET.ParseError, TimeoutError) as error:
-            failures.append("%s: %s" % (prefix.split(".com/")[1].split("/")[0], str(error)))
-    else:
-        raise ValueError("All feed URLs failed: " + "; ".join(failures))
+            failures.append(str(error))
+    if root is None:
+        raise ValueError("No usable feed entries: " + "; ".join(failures))
     items = []
     for entry in root.findall(ATOM + "entry"):
         video_id = (entry.findtext(YT + "videoId") or "").strip()
