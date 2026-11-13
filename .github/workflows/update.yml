@@ -3,6 +3,7 @@ on:
   push:
     paths:
       - 'scripts/update_posts.py'
+      - 'scripts/update_instagram.py'
   schedule:
     - cron: '17 */2 * * *'
   workflow_dispatch:
@@ -20,6 +21,11 @@ jobs:
         env:
           YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
         run: python scripts/update_posts.py
+      - name: Collect authenticated Instagram Business Discovery posts
+        env:
+          META_IG_USER_ID: ${{ secrets.META_IG_USER_ID }}
+          META_ACCESS_TOKEN: ${{ secrets.META_ACCESS_TOKEN }}
+        run: python scripts/update_instagram.py
       - name: Commit updated data
         run: |
           if ! git diff --quiet -- data/posts.json data/status.json; then
