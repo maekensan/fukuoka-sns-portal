@@ -41,13 +41,21 @@ function renderX(){
     container.style.maxWidth="760px";
     container.style.margin="0 auto";
     const timeline=el("a","Xリストのポストを見る","twitter-timeline");
-    timeline.href=url;timeline.setAttribute("data-height","650");timeline.setAttribute("data-theme","light");
+    timeline.href="https://twitter.com/i/lists/"+url.match(/\/lists\/(\d+)/)[1];timeline.setAttribute("data-height","650");timeline.setAttribute("data-theme","light");timeline.setAttribute("data-dnt","true");
     container.append(timeline);
     const open=link("Xリストを直接開く",url);
     if(open){const acts=el("div",undefined,"actions");acts.append(open);container.append(acts)}
     cards.append(container);
+    const embedNote=el("div","X側が埋め込み表示を制限している場合は、下の「Xリストを直接開く」から最新投稿を見られます。","small");
+    container.append(embedNote);
     if(window.twttr?.widgets?.load){window.twttr.widgets.load(container)}
-    else if(!document.getElementById("x-widget-script")){const script=document.createElement("script");script.id="x-widget-script";script.src="https://platform.twitter.com/widgets.js";script.async=true;document.body.append(script)}
+    else if(!document.getElementById("x-widget-script")){
+      const script=document.createElement("script");script.id="x-widget-script";
+      script.src="https://platform.twitter.com/widgets.js";script.async=true;
+      script.onload=()=>{if(window.twttr?.widgets?.load && view==="x")window.twttr.widgets.load(container)};
+      script.onerror=()=>{embedNote.textContent="Xの埋め込みスクリプトを読み込めませんでした。Xリストを直接開いてください。"};
+      document.body.append(script)
+    }
   }else{
     cards.append(el("div","Xの公開リストURLを設定すると、ここに21アカウントのタイムラインを表示できます。下のアカウント一覧からXリストを作成してください。","empty"));
   }
