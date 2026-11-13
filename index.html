@@ -8,7 +8,7 @@
 <div class="top"><div class="wrap"><div class="brand">国民民主党 福岡県連 ｜ SNSポータル</div><div class="small">議員・候補予定者の発信</div></div></div>
 <header class="hero"><div class="wrap"><div class="small" style="color:#c5dcff">FUKUOKA SNS FEED</div><h1>みんなの発信を、ひとつに。</h1><p>新着動画や投稿を一覧でチェック。気になった発信には、元のSNSからいいね・コメント・シェアできます。</p></div></header>
 <main class="wrap main">
-<section class="panel"><div class="tabs"><button class="tab active" id="feedTab" type="button">最新投稿</button><button class="tab" id="peopleTab" type="button">議員・候補予定者一覧</button></div>
+<section class="panel"><div class="tabs"><button class="tab active" id="feedTab" type="button">最新投稿</button><button class="tab" id="xTab" type="button">Xタイムライン</button><button class="tab" id="peopleTab" type="button">議員・候補予定者一覧</button></div>
 <div class="filters"><input id="search" type="search" placeholder="氏名・地域・選挙区で検索" aria-label="氏名・地域・選挙区で検索"><select id="platform" aria-label="SNSを選ぶ"><option value="">すべてのSNS</option><option>X</option><option>Instagram</option><option>YouTube</option><option>Facebook</option><option>Threads</option><option>TikTok</option><option>note/Blog</option></select><select id="period" aria-label="期間を選ぶ"><option value="all">全期間</option><option value="1">24時間</option><option value="7">7日間</option><option value="30">30日間</option></select></div>
 <div class="hint" id="notice">公開動画は自動取得。その他の媒体は登録された投稿のみ表示します。</div></section>
 <section><div class="sectionhead"><h2 id="heading">最新投稿</h2><span class="small" id="count"></span></div><div id="cards" class="grid"><div class="empty">読み込み中です…</div></div></section>
@@ -17,21 +17,56 @@
 </main>
 <script>
 const $=id=>document.getElementById(id);
-let people=[],posts=[],excluded=[],view="feed";
+let people=[],posts=[],excluded=[],view="feed",xConfig={listUrl:""};
 function el(tag,text,cls){const n=document.createElement(tag);if(text!==undefined)n.textContent=String(text);if(cls)n.className=cls;return n}
 function safe(url){try{const p=new URL(url);return p.protocol==="https:"?p.href:null}catch{return null}}
 function link(label,url){const href=safe(url);if(!href)return null;const a=el("a",label+" ↗");a.href=href;a.target="_blank";a.rel="noopener noreferrer";return a}
 function personCard(p){const c=el("article",undefined,"card");const h=el("div");h.append(el("div",p.name,"name"),el("div",p.category,"label"));c.append(h,el("div",p.district,"district"));if(p.status)c.append(el("div",p.status,"small"));const actions=el("div",undefined,"actions");for(const [medium,url] of Object.entries(p.links||{})){const a=link(medium,url);if(a)actions.append(a)}c.append(actions);return c}
 function postCard(p){const c=el("article",undefined,"card");const meta=el("div");meta.append(el("div",p.name||"投稿者","name"),el("div",(p.media||"SNS")+" ・ "+(p.date?new Date(p.date).toLocaleString("ja-JP"):"投稿日時未登録"),"small"));c.append(meta);if(p.district)c.append(el("div",p.district,"district"));if(p.title)c.append(el("div",p.title,"posttitle"));if(p.text)c.append(el("div",p.text,"excerpt"));if(safe(p.image)){const im=document.createElement("img");im.src=p.image;im.loading="lazy";im.alt="投稿のサムネイル";im.className="preview";im.onerror=()=>im.remove();c.append(im)}
 const actions=el("div",undefined,"actions");const a=link("投稿を見る・いいね・コメント・シェア",p.url);if(a)actions.append(a);c.append(actions);return c}
+function renderX(){
+  $("heading").textContent="Xタイムライン";
+  $("count").textContent="登録アカウントをまとめて見る";
+  $("period").disabled=true;
+  $("platform").disabled=true;
+  $("search").disabled=true;
+  const cards=$("cards");cards.replaceChildren();cards.style.display="block";
+  const intro=el("div",undefined,"notice");
+  intro.style.margin="0 0 15px";
+  intro.textContent="Xの公開リストをまとめて表示します。X側の仕様やログイン状態によって表示できない場合があります。投稿への反応は元のXから行えます。";
+  cards.append(intro);
+  const url=safe(xConfig.listUrl);
+  if(url&&new URL(url).hostname==="x.com"&&/\/lists\/\d+/.test(url)){
+    const container=el("div",undefined,"card");
+    container.style.maxWidth="760px";
+    container.style.margin="0 auto";
+    const timeline=el("a","Xリストのポストを見る","twitter-timeline");
+    timeline.href=url;timeline.setAttribute("data-height","650");timeline.setAttribute("data-theme","light");
+    container.append(timeline);
+    const open=link("Xリストを直接開く",url);
+    if(open){const acts=el("div",undefined,"actions");acts.append(open);container.append(acts)}
+    cards.append(container);
+    if(window.twttr?.widgets?.load){window.twttr.widgets.load(container)}
+    else if(!document.getElementById("x-widget-script")){const script=document.createElement("script");script.id="x-widget-script";script.src="https://platform.twitter.com/widgets.js";script.async=true;document.body.append(script)}
+  }else{
+    cards.append(el("div","Xの公開リストURLを設定すると、ここに21アカウントのタイムラインを表示できます。下のアカウント一覧からXリストを作成してください。","empty"));
+  }
+  const queryX=people.filter(p=>!excluded.includes(p.name)&&safe(p.links?.X));
+  const wrap=el("div");wrap.style.marginTop="20px";
+  wrap.append(el("h3","登録済みXアカウント（"+queryX.length+"人）"));
+  const links=el("div",undefined,"actions");
+  queryX.forEach(p=>{const a=link(p.name,p.links.X);if(a)links.append(a)});
+  wrap.append(links);cards.append(wrap);
+}
 function render(){const query=$("search").value.toLocaleLowerCase("ja").trim(),platform=$("platform").value,days=$("period").value;
-const cards=$("cards");cards.replaceChildren();
+const cards=$("cards");cards.replaceChildren();cards.style.display="grid";$("platform").disabled=false;$("search").disabled=false;
+if(view==="x"){renderX();return}
 if(view==="people"){$("heading").textContent="議員・候補予定者一覧";$("period").disabled=true;const shown=people.filter(p=>!excluded.includes(p.name)&&[p.name,p.district,p.category,p.status].join(" ").toLocaleLowerCase("ja").includes(query)&&(!platform||Boolean((p.links||{})[platform]))).sort((a,b)=>(a.order||999)-(b.order||999));$("count").textContent=shown.length+"人";shown.forEach(p=>cards.append(personCard(p)));if(!shown.length)cards.append(el("div","該当する人物が見つかりませんでした。","empty"));return}
 $("heading").textContent="最新投稿";$("period").disabled=false;
 const now=Date.now();const selected=posts.filter(p=>p.publish==="公開"&&!excluded.includes(p.name)&&(!platform||p.media===platform)&&[p.name,p.district,p.title,p.text].join(" ").toLocaleLowerCase("ja").includes(query)&&(!days||days==="all"||p.date&&now-new Date(p.date).getTime()<=Number(days)*86400000)).sort((a,b)=>new Date(b.date||0)-new Date(a.date||0));
 $("count").textContent=selected.length+"件";selected.forEach(p=>cards.append(postCard(p)));if(!selected.length)cards.append(el("div","現在、条件に合う登録済み投稿がありません。YouTubeの初回自動取得後に表示されます。","empty"))}
-function tab(which){view=which;$("feedTab").classList.toggle("active",which==="feed");$("peopleTab").classList.toggle("active",which==="people");render()}
-$("feedTab").onclick=()=>tab("feed");$("peopleTab").onclick=()=>tab("people");$("search").oninput=render;$("platform").onchange=render;$("period").onchange=render;
-async function load(){try{const [a,b,c,d]=await Promise.all(["data/people.json","data/posts.json","data/excluded_names.json","data/status.json"].map(u=>fetch(u+"?t="+Date.now()).then(r=>{if(!r.ok)throw Error(u+": "+r.status);return r.json()})));people=a;posts=b;excluded=c;const stamp=d.checkedAt?new Date(d.checkedAt).toLocaleString("ja-JP"):"未実行";$("notice").textContent="YouTube自動取得：成功 "+(d.youtubeFeedsSucceeded||0)+"/"+(d.youtubeFeedsExpected||0)+"チャンネル ／ 最終確認："+stamp+"。X・Instagramなどは投稿URLの手動登録に対応。";render()}catch(e){$("cards").replaceChildren(el("div","データを読み込めませんでした。GitHub Pagesの設定とJSONファイルを確認してください。","empty"));$("notice").textContent="読み込みに失敗しました。"}}
+function tab(which){view=which;$("feedTab").classList.toggle("active",which==="feed");$("peopleTab").classList.toggle("active",which==="people");$("xTab").classList.toggle("active",which==="x");render()}
+$("feedTab").onclick=()=>tab("feed");$("peopleTab").onclick=()=>tab("people");$("xTab").onclick=()=>tab("x");$("search").oninput=render;$("platform").onchange=render;$("period").onchange=render;
+async function load(){try{const [a,b,c,d]=await Promise.all(["data/people.json","data/posts.json","data/excluded_names.json","data/status.json"].map(u=>fetch(u+"?t="+Date.now()).then(r=>{if(!r.ok)throw Error(u+": "+r.status);return r.json()})));people=a;posts=b;excluded=c;try{xConfig=await fetch("data/x_config.json?t="+Date.now()).then(r=>r.ok?r.json():{listUrl:""})}catch{xConfig={listUrl:""}}const stamp=d.checkedAt?new Date(d.checkedAt).toLocaleString("ja-JP"):"未実行";$("notice").textContent="YouTube自動取得：成功 "+(d.youtubeFeedsSucceeded||0)+"/"+(d.youtubeFeedsExpected||0)+"チャンネル ／ 最終確認："+stamp+"。Instagramは認証済み対象を取得。Xは公開リストによる表示に対応。";render()}catch(e){$("cards").replaceChildren(el("div","データを読み込めませんでした。GitHub Pagesの設定とJSONファイルを確認してください。","empty"));$("notice").textContent="読み込みに失敗しました。"}}
 load();
 </script></body></html>
