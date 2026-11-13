@@ -1,5 +1,8 @@
 name: Update YouTube posts
 on:
+  push:
+    paths:
+      - 'scripts/update_posts.py'
   schedule:
     - cron: '17 */2 * * *'
   workflow_dispatch:
