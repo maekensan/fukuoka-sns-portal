@@ -3,12 +3,13 @@
 import datetime as dt
 import html
 import json
+import os
 import pathlib
 import re
 import urllib.request
 import urllib.error
 import xml.etree.ElementTree as ET
-from urllib.parse import urlparse
+from urllib.parse import urlparse, urlencode
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 DATA = ROOT / "data"
@@ -47,6 +48,51 @@ def channel_id(url):
         except Exception as error:
             print("Could not resolve YouTube handle:", type(error).__name__)
     return None
+
+
+def youtube_api(path, params, key):
+    query = urlencode({**params, "key": key})
+    body = download("https://www.googleapis.com/youtube/v3/" + path + "?" + query)
+    return json.loads(body.decode("utf-8"))
+
+def channel_api_id(url, key):
+    match = CHANNEL_RE.search(url)
+    if match and "/channel/" in url:
+        return match.group()
+    parsed = urlparse(url)
+    handle = parsed.path.strip("/").split("/")[0]
+    if handle.startswith("@"):
+        result = youtube_api("channels", {"part": "id", "forHandle": handle}, key)
+        items = result.get("items", [])
+        return items[0]["id"] if items else None
+    return channel_id(url)
+
+def collect_api(channel, person, key):
+    response = youtube_api("channels", {"part": "contentDetails", "id": channel}, key)
+    items = response.get("items", [])
+    if not items:
+        return []
+    uploads = items[0]["contentDetails"]["relatedPlaylists"]["uploads"]
+    playlist = youtube_api("playlistItems", {"part": "snippet,contentDetails",
+                        "playlistId": uploads, "maxResults": 20}, key)
+    posts = []
+    for item in playlist.get("items", []):
+        snippet = item.get("snippet") or {}
+        video_id = (item.get("contentDetails") or {}).get("videoId")
+        if not video_id or not re.fullmatch(r"[A-Za-z0-9_-]{11}", video_id):
+            continue
+        posts.append({
+            "id": "youtube:" + video_id, "name": person["name"],
+            "district": person["district"], "media": "YouTube",
+            "url": "https://www.youtube.com/watch?v=" + video_id,
+            "date": (item.get("contentDetails") or {}).get("videoPublishedAt")
+                    or snippet.get("publishedAt", ""),
+            "title": snippet.get("title", ""),
+            "text": (snippet.get("description") or "")[:350],
+            "image": "https://i.ytimg.com/vi/" + video_id + "/hqdefault.jpg",
+            "publish": "公開", "source": "youtube-rss",
+        })
+    return posts
 
 def valid_url(value):
     if not isinstance(value, str):
@@ -106,6 +152,7 @@ def main():
     success = 0
     errors = []
     expected = 0
+    api_key = os.environ.get("YOUTUBE_API_KEY", "").strip()
     for person in people:
         if person["name"] in excluded:
             continue
@@ -114,11 +161,11 @@ def main():
             continue
         expected += 1
         try:
-            identity = channel_id(url)
+            identity = channel_api_id(url, api_key) if api_key else channel_id(url)
             if not identity:
                 errors.append(person["name"] + ": channel ID not found")
                 continue
-            fresh += collect(identity, person)
+            fresh += collect_api(identity, person, api_key) if api_key else collect(identity, person)
             success += 1
         except (urllib.error.URLError, ET.ParseError, TimeoutError, ValueError) as error:
             errors.append(person["name"] + ": " + str(error)[:220])
