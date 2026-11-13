@@ -58,8 +58,19 @@ def valid_url(value):
         return False
 
 def collect(channel, person):
-    feed = download("https://www.youtube.com/feeds/videos.xml?channel_id=" + channel)
-    root = ET.fromstring(feed)
+    # YouTube currently uses /xml/feeds/ for its working notification topic.
+    # Keep the older /feeds/ route as a fallback for intermittent changes.
+    failures = []
+    for prefix in ("https://www.youtube.com/xml/feeds/videos.xml?channel_id=",
+                   "https://www.youtube.com/feeds/videos.xml?channel_id="):
+        try:
+            feed = download(prefix + channel)
+            root = ET.fromstring(feed)
+            break
+        except (urllib.error.HTTPError, urllib.error.URLError, ET.ParseError, TimeoutError) as error:
+            failures.append("%s: %s" % (prefix.split(".com/")[1].split("/")[0], str(error)))
+    else:
+        raise ValueError("All feed URLs failed: " + "; ".join(failures))
     items = []
     for entry in root.findall(ATOM + "entry"):
         video_id = (entry.findtext(YT + "videoId") or "").strip()
@@ -110,7 +121,7 @@ def main():
             fresh += collect(identity, person)
             success += 1
         except (urllib.error.URLError, ET.ParseError, TimeoutError, ValueError) as error:
-            errors.append(person["name"] + ": " + type(error).__name__)
+            errors.append(person["name"] + ": " + str(error)[:220])
     by_url = {}
     for item in retained + fresh + submitted:
         url = item.get("url", "")
