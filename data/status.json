@@ -1,11 +1,8 @@
 {
-  "checkedAt": "2026-11-13T01:42:35.567997+00:00",
-  "youtubeFeedsSucceeded": 6,
+  "checkedAt": "2026-11-13T01:43:22.324592+00:00",
+  "youtubeFeedsSucceeded": 8,
   "youtubeFeedsExpected": 8,
-  "errors": [
-    "新納 亮平: playlistItems.list HTTP 404 (playlistNotFound)",
-    "山下 陽平: playlistItems.list HTTP 404 (playlistNotFound)"
-  ],
+  "errors": [],
   "posts": 102,
   "instagram": {
     "configured": false,
