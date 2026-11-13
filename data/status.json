@@ -1,16 +1,7 @@
 {
-  "checkedAt": "2026-11-13T01:14:25.444275+00:00",
-  "youtubeFeedsSucceeded": 0,
+  "checkedAt": "2026-11-13T01:29:46.753986+00:00",
+  "youtubeFeedsSucceeded": 8,
   "youtubeFeedsExpected": 8,
-  "errors": [
-    "新納 亮平: HTTPError",
-    "山下 陽平: HTTPError",
-    "酒井 久之: HTTPError",
-    "津曲 雄也: HTTPError",
-    "大塚 弘尊: HTTPError",
-    "大田 京子: HTTPError",
-    "許斐 亮太郎: HTTPError",
-    "泉 日出夫: HTTPError"
-  ],
+  "errors": [],
   "posts": 0
 }
