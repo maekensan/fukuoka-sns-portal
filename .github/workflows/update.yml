@@ -17,6 +17,8 @@ jobs:
         with:
           python-version: '3.12'
       - name: Collect public YouTube feeds
+        env:
+          YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
         run: python scripts/update_posts.py
       - name: Commit updated data
         run: |
