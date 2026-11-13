@@ -17,7 +17,7 @@
 </main>
 <script>
 const $=id=>document.getElementById(id);
-let people=[],posts=[],excluded=[],view="feed",xConfig={listUrl:""};
+let people=[],posts=[],excluded=[],view="feed",xConfig={listUrl:"https://x.com/i/lists/2121071465793831152"};
 function el(tag,text,cls){const n=document.createElement(tag);if(text!==undefined)n.textContent=String(text);if(cls)n.className=cls;return n}
 function safe(url){try{const p=new URL(url);return p.protocol==="https:"?p.href:null}catch{return null}}
 function link(label,url){const href=safe(url);if(!href)return null;const a=el("a",label+" ↗");a.href=href;a.target="_blank";a.rel="noopener noreferrer";return a}
@@ -36,7 +36,7 @@ function renderX(){
   intro.textContent="Xの公開リストをまとめて表示します。X側の仕様やログイン状態によって表示できない場合があります。投稿への反応は元のXから行えます。";
   cards.append(intro);
   const url=safe(xConfig.listUrl);
-  if(url&&new URL(url).hostname==="x.com"&&/\/lists\/\d+/.test(url)){
+  if(url&&["x.com","twitter.com"].includes(new URL(url).hostname)&&/\/lists\/\d+/.test(url)){
     const container=el("div",undefined,"card");
     container.style.maxWidth="760px";
     container.style.margin="0 auto";
@@ -67,6 +67,6 @@ const now=Date.now();const selected=posts.filter(p=>p.publish==="公開"&&!exclu
 $("count").textContent=selected.length+"件";selected.forEach(p=>cards.append(postCard(p)));if(!selected.length)cards.append(el("div","現在、条件に合う登録済み投稿がありません。YouTubeの初回自動取得後に表示されます。","empty"))}
 function tab(which){view=which;$("feedTab").classList.toggle("active",which==="feed");$("peopleTab").classList.toggle("active",which==="people");$("xTab").classList.toggle("active",which==="x");render()}
 $("feedTab").onclick=()=>tab("feed");$("peopleTab").onclick=()=>tab("people");$("xTab").onclick=()=>tab("x");$("search").oninput=render;$("platform").onchange=render;$("period").onchange=render;
-async function load(){try{const [a,b,c,d]=await Promise.all(["data/people.json","data/posts.json","data/excluded_names.json","data/status.json"].map(u=>fetch(u+"?t="+Date.now()).then(r=>{if(!r.ok)throw Error(u+": "+r.status);return r.json()})));people=a;posts=b;excluded=c;try{xConfig=await fetch("data/x_config.json?t="+Date.now()).then(r=>r.ok?r.json():{listUrl:""})}catch{xConfig={listUrl:""}}const stamp=d.checkedAt?new Date(d.checkedAt).toLocaleString("ja-JP"):"未実行";$("notice").textContent="YouTube自動取得：成功 "+(d.youtubeFeedsSucceeded||0)+"/"+(d.youtubeFeedsExpected||0)+"チャンネル ／ 最終確認："+stamp+"。Instagramは認証済み対象を取得。Xは公開リストによる表示に対応。";render()}catch(e){$("cards").replaceChildren(el("div","データを読み込めませんでした。GitHub Pagesの設定とJSONファイルを確認してください。","empty"));$("notice").textContent="読み込みに失敗しました。"}}
+async function load(){try{const [a,b,c,d]=await Promise.all(["data/people.json","data/posts.json","data/excluded_names.json","data/status.json"].map(u=>fetch(u+"?t="+Date.now()).then(r=>{if(!r.ok)throw Error(u+": "+r.status);return r.json()})));people=a;posts=b;excluded=c;try{const remote=await fetch("data/x_config.json?t="+Date.now()).then(r=>r.ok?r.json():null);if(remote?.listUrl)xConfig=remote}catch(e){console.warn("X list configuration unavailable; using saved list URL")}const stamp=d.checkedAt?new Date(d.checkedAt).toLocaleString("ja-JP"):"未実行";$("notice").textContent="YouTube自動取得：成功 "+(d.youtubeFeedsSucceeded||0)+"/"+(d.youtubeFeedsExpected||0)+"チャンネル ／ 最終確認："+stamp+"。Instagramは認証済み対象を取得。Xは公開リストによる表示に対応。";render()}catch(e){$("cards").replaceChildren(el("div","データを読み込めませんでした。GitHub Pagesの設定とJSONファイルを確認してください。","empty"));$("notice").textContent="読み込みに失敗しました。"}}
 load();
 </script></body></html>
