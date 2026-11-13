@@ -31,7 +31,7 @@ def username(url):
 
 def fetch(account, username_, token):
     fields = ("business_discovery.username(" + username_ + ")"
-              "{username,media.limit(8){id,caption,media_type,media_url,thumbnail_url,permalink,timestamp}}")
+              "{username,media.limit(8){id,caption,media_type,permalink,timestamp}}")
     query = urlencode({"fields": fields, "access_token": token})
     url = f"https://graph.facebook.com/{API_VERSION}/{account}?{query}"
     with urlopen(Request(url, headers={"User-Agent":"FukuokaSNSPortal/1.0"}), timeout=20) as res:
@@ -78,8 +78,18 @@ def main():
             ok += 1
         except (HTTPError, URLError, ValueError, KeyError) as e:
             # Never log request URL or token; errors may include sensitive request params.
-            errors.append(person["name"] + ": " + type(e).__name__ +
-                          (" HTTP " + str(e.code) if isinstance(e, HTTPError) else ""))
+            reason = type(e).__name__
+            if isinstance(e, HTTPError):
+                reason += " HTTP " + str(e.code)
+                try:
+                    detail = json.loads(e.read().decode("utf-8")).get("error", {})
+                    # Log only structured error codes, never credentials or URL.
+                    reason += " code=" + str(detail.get("code", "unknown"))
+                    reason += " subcode=" + str(detail.get("error_subcode", "none"))
+                    reason += " type=" + str(detail.get("type", "unknown"))
+                except (ValueError, KeyError, AttributeError):
+                    pass
+            errors.append(person["name"] + ": " + reason)
     combined = {p["url"]:p for p in old if p.get("url") and
                 p.get("source") != "instagram-business-discovery" and p.get("name") not in excluded}
     for p in old:
