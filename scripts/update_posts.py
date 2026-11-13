@@ -71,10 +71,19 @@ def collect_api(channel, person, key):
     response = youtube_api("channels", {"part": "contentDetails", "id": channel}, key)
     items = response.get("items", [])
     if not items:
-        return []
+        raise ValueError("YouTube channels.list returned no matching channel (check channel URL/ID)")
     uploads = items[0]["contentDetails"]["relatedPlaylists"]["uploads"]
-    playlist = youtube_api("playlistItems", {"part": "snippet,contentDetails",
-                        "playlistId": uploads, "maxResults": 20}, key)
+    try:
+        playlist = youtube_api("playlistItems", {"part": "snippet,contentDetails",
+                            "playlistId": uploads, "maxResults": 20}, key)
+    except urllib.error.HTTPError as error:
+        reason = "unknown"
+        try:
+            details = json.loads(error.read().decode("utf-8"))
+            reason = details.get("error", {}).get("errors", [{}])[0].get("reason", "unknown")
+        except (ValueError, IndexError, AttributeError):
+            pass
+        raise ValueError("playlistItems.list HTTP " + str(error.code) + " (" + reason + ")") from None
     posts = []
     for item in playlist.get("items", []):
         snippet = item.get("snippet") or {}
@@ -147,7 +156,7 @@ def main():
     excluded = set(load("excluded_names.json", []))
     previous = load("posts.json", [])
     manual = load("manual_posts.json", [])
-    retained = [p for p in previous if p.get("source") == "youtube-rss"
+    retained = [p for p in previous if p.get("source") in ("youtube-rss", "instagram-business-discovery")
                 and p.get("name") not in excluded]
     submitted = [p for p in manual if p.get("publish") == "公開"
                  and p.get("name") not in excluded and valid_url(p.get("url"))]
@@ -182,9 +191,10 @@ def main():
     (DATA / "posts.json").write_text(
         json.dumps(posts, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
     )
-    status = {"checkedAt": dt.datetime.now(dt.timezone.utc).isoformat(),
+    status = load("status.json", {})
+    status.update({"checkedAt": dt.datetime.now(dt.timezone.utc).isoformat(),
               "youtubeFeedsSucceeded": success, "youtubeFeedsExpected": expected,
-              "errors": errors, "posts": len(posts)}
+              "errors": errors, "posts": len(posts)})
     (DATA / "status.json").write_text(
         json.dumps(status, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
     )
