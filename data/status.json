@@ -1,16 +1,17 @@
 {
-  "checkedAt": "2026-11-13T01:31:11.023692+00:00",
-  "youtubeFeedsSucceeded": 0,
+  "checkedAt": "2026-11-13T01:40:32.934379+00:00",
+  "youtubeFeedsSucceeded": 6,
   "youtubeFeedsExpected": 8,
   "errors": [
-    "新納 亮平: No usable feed entries: HTTP Error 404: Not Found; feed returned zero entries",
-    "山下 陽平: No usable feed entries: HTTP Error 404: Not Found; feed returned zero entries",
-    "酒井 久之: No usable feed entries: HTTP Error 404: Not Found; feed returned zero entries",
-    "津曲 雄也: No usable feed entries: HTTP Error 500: Internal Server Error; feed returned zero entries",
-    "大塚 弘尊: No usable feed entries: HTTP Error 404: Not Found; feed returned zero entries",
-    "大田 京子: No usable feed entries: HTTP Error 404: Not Found; feed returned zero entries",
-    "許斐 亮太郎: No usable feed entries: HTTP Error 404: Not Found; feed returned zero entries",
-    "泉 日出夫: No usable feed entries: HTTP Error 404: Not Found; feed returned zero entries"
+    "新納 亮平: HTTP Error 404: Not Found",
+    "山下 陽平: HTTP Error 404: Not Found"
   ],
-  "posts": 0
+  "posts": 102,
+  "instagram": {
+    "configured": false,
+    "checkedAt": null,
+    "succeeded": 0,
+    "expected": 32,
+    "errors": []
+  }
 }
