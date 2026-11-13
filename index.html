@@ -39,10 +39,19 @@ function renderX(){
   intro.append(el("div","Xの投稿は、公開リストでまとめてチェック","posttitle"));
   intro.append(el("div","Xの埋め込みがこのサイトでは表示されないため、公開リストを直接開く方式にしています。一人ずつアカウントを巡回する必要はありません。","district"));
   if(url&&["x.com","twitter.com"].includes(new URL(url).hostname)&&/\/lists\/\d+/.test(url)){
-    const btn=link("21人のXタイムラインを開く",url);
+    const btn=link("Xの公開リストを開く",url);
     if(btn){btn.style.display="inline-block";btn.style.padding="13px 20px";btn.style.background="#174489";btn.style.color="#fff";btn.style.borderRadius="10px";btn.style.fontWeight="800";btn.style.textDecoration="none";btn.style.alignSelf="flex-start";intro.append(btn)}
   }else{intro.append(el("div","公開Xリストはまだ設定されていません。","district"))}
   cards.append(intro);
+  const official=el("div");official.style.marginTop="22px";
+  official.append(el("h3","党公式アカウント（2件）"));
+  const officialLinks=el("div",undefined,"actions");
+  const officialItems=[
+    ["福岡県連  @DPFP_fukuoka","https://x.com/DPFP_fukuoka"],
+    ["党公式ニュース  @DPFPnews","https://x.com/DPFPnews"]
+  ];
+  officialItems.forEach(([title,url])=>{const a=link(title,url);if(a)officialLinks.append(a)});
+  official.append(officialLinks);cards.append(official);
   const wrap=el("div");wrap.style.marginTop="22px";
   wrap.append(el("h3","個別のXアカウント（"+registered.length+"人）"));
   const links=el("div",undefined,"actions");
