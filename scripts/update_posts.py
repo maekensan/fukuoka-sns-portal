@@ -83,6 +83,25 @@ def collect_api(channel, person, key):
             reason = details.get("error", {}).get("errors", [{}])[0].get("reason", "unknown")
         except (ValueError, IndexError, AttributeError):
             pass
+        if error.code == 404 and reason == "playlistNotFound":
+            # Use the official search endpoint only for channels whose uploads playlist fails.
+            # This should consume at most 2 search calls per 2-hour update at current scale.
+            results = youtube_api("search", {"part":"snippet", "channelId":channel,
+                          "type":"video", "order":"date", "maxResults":20}, key)
+            found = []
+            for video in results.get("items", []):
+                vid = (video.get("id") or {}).get("videoId", "")
+                snippet = video.get("snippet") or {}
+                if not re.fullmatch(r"[A-Za-z0-9_-]{11}", vid):
+                    continue
+                found.append({"id":"youtube:" + vid, "name":person["name"],
+                              "district":person["district"], "media":"YouTube",
+                              "url":"https://www.youtube.com/watch?v=" + vid,
+                              "date":snippet.get("publishedAt",""),
+                              "title":snippet.get("title",""), "text":snippet.get("description","")[:350],
+                              "image":"https://i.ytimg.com/vi/" + vid + "/hqdefault.jpg",
+                              "publish":"公開","source":"youtube-rss"})
+            return found
         raise ValueError("playlistItems.list HTTP " + str(error.code) + " (" + reason + ")") from None
     posts = []
     for item in playlist.get("items", []):
