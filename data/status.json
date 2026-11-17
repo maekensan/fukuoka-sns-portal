@@ -1,12 +1,12 @@
 {
-  "checkedAt": "2026-11-17T09:20:29.969638+00:00",
+  "checkedAt": "2026-11-17T11:15:37.396935+00:00",
   "youtubeFeedsSucceeded": 8,
   "youtubeFeedsExpected": 8,
   "errors": [],
   "posts": 295,
   "instagram": {
     "configured": true,
-    "checkedAt": "2026-11-17T09:20:35.458564+00:00",
+    "checkedAt": "2026-11-17T11:15:40.962991+00:00",
     "succeeded": 0,
     "expected": 32,
     "errors": [
