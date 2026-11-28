@@ -495,5 +495,19 @@
     },
     "order": 34,
     "photo": ""
+  },
+  {
+    "id": 35,
+    "name": "中丸 与志哉",
+    "category": "候補予定者",
+    "district": "久留米市議選",
+    "status": "公認・新人",
+    "links": {
+      "X": "https://x.com/yoshiyanakamaru",
+      "Threads": "https://www.threads.com/@yoshiyanakamaru",
+      "Instagram": "https://www.instagram.com/yoshiyanakamaru/"
+    },
+    "order": 35,
+    "photo": ""
   }
 ]
