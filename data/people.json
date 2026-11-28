@@ -468,5 +468,32 @@
     },
     "order": 32,
     "photo": ""
+  },
+  {
+    "id": 33,
+    "name": "城後 光",
+    "category": "候補予定者",
+    "district": "福岡県議選（八女市・八女郡）",
+    "status": "公認・新人",
+    "links": {
+      "Facebook": "https://www.facebook.com/hikaruj",
+      "Threads": "https://www.threads.com/@hikarujogo",
+      "Instagram": "https://www.instagram.com/hikarujogo/",
+      "YouTube": "https://www.youtube.com/hikaruj"
+    },
+    "order": 33,
+    "photo": ""
+  },
+  {
+    "id": 34,
+    "name": "金子 知代",
+    "category": "候補予定者",
+    "district": "福岡県議選（大川市・三潴郡）",
+    "status": "公認・新人",
+    "links": {
+      "Instagram": "https://www.instagram.com/tomoyo.okawaoki/"
+    },
+    "order": 34,
+    "photo": ""
   }
 ]
